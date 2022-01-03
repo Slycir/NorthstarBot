@@ -9,7 +9,7 @@ const { token, conPre } = require('./config.json');
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
 client.commands = new Collection();
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+var commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
 var childProcess = require('child_process');
 
@@ -74,6 +74,11 @@ function sendRefresh() {
                 runScript('./deploy-commands.js', function (err) {
                     if (err) throw err;
                 });
+                commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+                for (const file of commandFiles) {
+                    const command = require(`./commands/${file}`);
+                    client.commands.set(command.data.name, command);
+                }
             }
 				
 		}
