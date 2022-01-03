@@ -1,11 +1,41 @@
 const fs = require('fs');
+const readline = require('readline').createInterface({
+    input: process.stdin,
+    output: process.stdout
+  })
 const { Client, Collection, Intents } = require('discord.js');
-const { token } = require('./config.json');
+const { token, conPre } = require('./config.json');
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
 client.commands = new Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+
+var childProcess = require('child_process');
+
+function runScript(scriptPath, callback) {
+
+    // keep track of whether callback has been invoked to prevent multiple invocations
+    var invoked = false;
+
+    var process = childProcess.fork(scriptPath);
+
+    // listen for errors as they may prevent the exit event from firing
+    process.on('error', function (err) {
+        if (invoked) return;
+        invoked = true;
+        callback(err);
+    });
+
+    // execute the callback once the process has finished running
+    process.on('exit', function (code) {
+        if (invoked) return;
+        invoked = true;
+        var err = code === 0 ? null : new Error('exit code ' + code);
+        callback(err);
+    });
+
+}
 
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
@@ -14,6 +44,7 @@ for (const file of commandFiles) {
 
 client.once('ready', () => {
 	console.log('Ready!');
+    sendRefresh()
 });
 
 client.on('interactionCreate', async interaction => {
@@ -32,3 +63,21 @@ client.on('interactionCreate', async interaction => {
 });
 
 client.login(token);
+
+function sendRefresh() {
+	readline.question('', name => {
+
+		const args = name.slice(conPre.length).trim().split(' ');
+		const command = args.shift().toLowerCase();
+		if (name.startsWith(conPre)) {
+			if (command == 'comre') {
+                runScript('./deploy-commands.js', function (err) {
+                    if (err) throw err;
+                });
+            }
+				
+		}
+
+		sendRefresh();
+	  })
+}
