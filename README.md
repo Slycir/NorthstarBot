@@ -1,7 +1,5 @@
 # NorthstarBot
 
-### help - 
-#### Brings you here
+##### help - Brings you here
 
-### latest - 
-#### Links to the latest version of Northstar
+##### latest - Links to the latest version of Northstar
