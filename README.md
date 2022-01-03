@@ -1,4 +1,5 @@
 NorthstarBot
 
 help - Brings you here
-\nlatest - Links to the latest version of Northstar
+
+latest - Links to the latest version of Northstar
