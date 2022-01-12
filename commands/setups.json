@@ -21,11 +21,11 @@
             "\t\tconst row = new MessageActionRow()",
             "\t\t\t.addComponents(",
             "\t\t\t\tnew MessageButton()",
-            "\t\t\t\t\t.setLabel('')",
+            "\t\t\t\t\t.setLabel('${commandLinkLabel}')",
             "\t\t\t\t\t.setStyle('LINK')",
-            "\t\t\t\t\t.setURL('$1'),",
+            "\t\t\t\t\t.setURL('${commandLink}'),",
             "\t\t\t);",
-            "\t\treturn interaction.reply({ content: '$3', components: [row]});",
+            "\t\treturn interaction.reply({ content: '${commandText}', components: [row]});",
             "\t},",
             "};"]
         

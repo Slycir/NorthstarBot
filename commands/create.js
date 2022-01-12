@@ -24,9 +24,11 @@ module.exports = {
         const commandDesc = interaction.options.getString('command-desc');
         const commandText = interaction.options.getString('command-text');
 		const commandType = interaction.options.getString('command-type');
-		if (commandType == 'link') {
-			const commandLink = interaction.options.getString('command-link');
-            const commandLinkLabel = interaction.options.getString('command-link-label')
+        var commandLink;
+        var commandLinkLabel;
+		if (commandType.toLowerCase() == 'link') {
+			commandLink = interaction.options.getString('command-link');
+            commandLinkLabel = interaction.options.getString('command-link-label')
             linkBool = true;
         }
         console.log(commandName)
