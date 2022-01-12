@@ -1,4 +1,5 @@
 const fs = require('fs');
+var childProcess = require('child_process');
 const readline = require('readline').createInterface({
     input: process.stdin,
     output: process.stdout
@@ -8,10 +9,12 @@ const { token, conPre } = require('./config.json');
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
+runScript('./deploy-commands.js', function (err) {
+    if (err) throw err;
+});
+
 client.commands = new Collection();
 var commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
-
-var childProcess = require('child_process');
 
 function runScript(scriptPath, callback) {
 
@@ -55,7 +58,19 @@ client.on('interactionCreate', async interaction => {
 	if (!command) return;
 
 	try {
-		await command.execute(interaction);
+        if(interaction.commandName == 'create') {
+            await command.execute(interaction);
+            runScript('./deploy-commands.js', function (err) {
+                if (err) throw err;
+            });
+            commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+            for (const file of commandFiles) {
+                const command = require(`./commands/${file}`);
+                client.commands.set(command.data.name, command);
+            }
+        } else {
+            await command.execute(interaction);
+        }
 	} catch (error) {
 		console.error(error);
 		return interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });

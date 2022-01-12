@@ -15,7 +15,7 @@ module.exports = {
                 new MessageButton()
                     .setLabel('Dedicated Server Video')
                     .setStyle('LINK')
-                    .setURL('https://youtu.be/EZ3w2Nl9SZo')
+                    .setURL('https://youtu.be/EZ3w2Nl9SZo'),
             );
         return interaction.reply({ content: 'Dedicated server setup guide:', components: [row]});
     },
