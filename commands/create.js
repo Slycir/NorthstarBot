@@ -33,7 +33,7 @@ module.exports = {
         }
         console.log(commandName)
         if (linkBool) {
-            commandFile = `${setups[1][0]}` + '\n'
+            commandFile = `${setups[1][0]}` + `   //Command made by ${interaction.member.displayName}` + '\n'
             for(x = 1; x < setups[1].length; x++) {
                 commandFile += `${setups[1][x]}` + '\n';
             }
@@ -43,7 +43,7 @@ module.exports = {
             commandFile = commandFile.replace('${commandLink}', commandLink);
             commandFile = commandFile.replace('${commandLinkLabel}', commandLinkLabel);
         } else {
-            commandFile = `${setups[0][0]}` + '\n'
+            commandFile = `${setups[0][0]}` + `   //Command made by ${interaction.member.displayName}` + '\n'
             for(x = 1; x < setups[0].length; x++) {
                 commandFile += `${setups[0][x]}` + '\n';
             }
