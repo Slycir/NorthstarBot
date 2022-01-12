@@ -51,7 +51,7 @@ module.exports = {
             commandFile = commandFile.replace('${commandDesc}', commandDesc);
             commandFile = commandFile.replace('${commandText}', commandText);
         }
-        fs.writeFile(`./commands/${commandName}.js`, commandFile, err => {
+        fs.writeFile(`./commands/${commandName}CR.js`, commandFile, err => {
             if (err) {
               console.error(err)
             }

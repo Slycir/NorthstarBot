@@ -9,7 +9,8 @@
             "\tasync execute(interaction) {",
             "\t\treturn interaction.reply('${commandText}');",
             "\t},",
-            "};"],
+            "};",
+            "//This was made with the create command"],
         ["const { SlashCommandBuilder } = require('@discordjs/builders');",
             "const { MessageActionRow, MessageButton } = require('discord.js');",
             "",
@@ -27,7 +28,8 @@
             "\t\t\t);",
             "\t\treturn interaction.reply({ content: '${commandText}', components: [row]});",
             "\t},",
-            "};"]
+            "};",
+            "//This was made with the create command"]
         
     ]
 }
